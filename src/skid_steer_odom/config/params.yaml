@@ -1,0 +1,6 @@
+wheel_odometry_node:
+  ros__parameters:
+    wheel_radius: 0.0800080  # 0.08 * 1.00206
+    track_width: 0.45
+    ticks_per_rev: 1024
+    slip_factor_chi: 1.436  # Calibrated slip factor 
