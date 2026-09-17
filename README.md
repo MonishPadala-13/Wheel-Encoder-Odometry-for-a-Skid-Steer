@@ -135,29 +135,45 @@ skid_steer_odom/
 * ROS–Ignition Bridge:
   ```bash
   sudo apt-get install ros-humble-ros-gz
+  warg
+     
+  
 ## Build 
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws/src
-git clone <repository_url> skid_steer_odom
-cd ~/ros2_ws
-colcon build --packages-select skid_steer_odom
-source install/setup.bash
-## Usage
+
+ 
+    ```bash
+    mkdir -p ~/ros2_ws/src
+    cd ~/ros2_ws/src
+    git clone <repository_url> skid_steer_odom
+    cd ~/ros2_ws
+    colcon build --packages-select skid_steer_odom
+    source install/setup.bash
+
+##
 1. Launch the Base SimulationStarts Ignition Gazebo, spawns the rover, starts the bridge, and runs the odometry pipeline:
+   ```bash
+   source ~/ros2_ws/install/setup.bash
+   ros2 launch skid_steer_odom sim.launch.py
+   
+
+2. Run Automated Kinematic CalibrationIn a separate terminal:
+   ```bash
+   source ~/ros2_ws/install/setup.bash
+   ros2 run skid_steer_odom calibrate.py
+   This executes the $5\text{ m}$ straight run followed by the 5-revolution spin, logging the computed $k_s$ and $\chi$ directly to stdout.3. Run the UMBmark Square BenchmarkExecutes 5 Clockwise (CW) and 5 Counter-Clockwise (CCW) $2\text{ m} \times 2\text{ m}$ closed-loop squares:Bash# Terminal 2: Trajectory Plotter
+   source ~/ros2_ws/install/setup.bash
+   ros2 run skid_steer_odom plot_results.py
+   
 Bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch skid_steer_odom sim.launch.py
-Run Automated Kinematic CalibrationIn a separate terminal:
-Bash
-source ~/ros2_ws/install/setup.bash
-ros2 run skid_steer_odom calibrate.py
-This executes the $5\text{ m}$ straight run followed by the 5-revolution spin, logging the computed $k_s$ and $\chi$ directly to stdout.3. Run the UMBmark Square BenchmarkExecutes 5 Clockwise (CW) and 5 Counter-Clockwise (CCW) $2\text{ m} \times 2\text{ m}$ closed-loop squares:Bash# Terminal 2: Trajectory Plotter
-source ~/ros2_ws/install/setup.bash
-ros2 run skid_steer_odom plot_results.py
+
 
 # Terminal 3: Benchmark Driver
-source ~/ros2_ws/install/setup.bash
-ros2 run skid_steer_odom umbmark_test.py
+    ```bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 run skid_steer_odom umbmark_test.py
+
+
+
 Results are exported to ~/ros2_ws/umbmark_results.csv.Press Ctrl+C on the plotter to generate ~/ros2_ws/trajectory_comparison.png.Systematic Error Analysis (Part 6)To model real-world manufacturing or inflation asymmetry, a $+2.0\%$ diameter mismatch is injected into the right-side wheels (right_wheel_scale: 1.02):Bash# Terminal 1: Launch with right-side scale distortion
 ros2 launch skid_steer_odom part6_systematic.launch.py
 
